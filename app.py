@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
+app.config['SECRET_KEY'] = 'secretkey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////mnt/c/Users/antho/Documents/login-example/database.db'
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
@@ -73,9 +73,59 @@ def signup():
     return render_template('signup.html', form=form)
 
 @app.route('/dashboard')
-@login_required
+# @login_required
 def dashboard():
-    return render_template('dashboard.html', name=current_user.username)
+    # return render_template('dashboard.html', name=current_user.username)
+    return render_template('dashboard.html')
+# *************************************************************************************************************************************
+
+@app.route('/department')
+def department():
+    return render_template('department.html', title='Our Departments')
+
+
+#EDITING APPOINTMENT
+@app.route('/appointment/edit')
+def doctor_edit():
+    return render_template('editappointment.html', title='Edit Appointment')
+
+@app.route('/appointment')
+def appointment():
+    return render_template('appointment.html', title='All Appointments')
+
+@app.route('/staff')
+def staff():
+    return render_template('staff.html', title='Staff')
+
+
+@app.route('/appointment/add')
+def add_appointment():
+    return render_template('addappointment.html',title='Add Appointment')
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html', title='Profile')
+
+# MAIN BLOG
+@app.route('/blog')
+def blog():
+    return render_template('blog.html', title='All Blogs')
+
+
+# ADDING A BLOG
+@app.route('/blog/add')
+def add_blog():
+    return render_template('addblog.html', title='Add Blog')
+
+
+# EDITING A BLOG
+@app.route('/blog')
+def blog_edit():
+    return render_template('editblog.html', title='Edit Blog')
+
+# ******************************************************************************************************************************************
+
+
 
 @app.route('/logout')
 @login_required
