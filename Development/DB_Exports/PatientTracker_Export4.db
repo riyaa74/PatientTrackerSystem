@@ -1,0 +1,75 @@
+--
+-- File generated with SQLiteStudio v3.4.4 on Sun Dec 10 01:58:22 2023
+--
+-- Text encoding used: System
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Table: Admin_Master
+CREATE TABLE IF NOT EXISTS Admin_Master (Admin_ID TEXT PRIMARY KEY, Admin_Name TEXT NOT NULL, Admin_UserID TEXT UNIQUE NOT NULL, Admin_Password TEXT NOT NULL);
+INSERT INTO Admin_Master (Admin_ID, Admin_Name, Admin_UserID, Admin_Password) VALUES ('A1', 'Admin1', 'Admin1', 'password');
+
+-- Table: Appointment_Master
+CREATE TABLE IF NOT EXISTS Appointment_Master (Appointment_ID INTEGER PRIMARY KEY AUTOINCREMENT, Patient_ID TEXT REFERENCES Patient_Master (Patient_ID) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL, Doctor_ID TEXT REFERENCES Doctor_Master (Doctor_ID) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL, Date_of_Appointment TEXT NOT NULL, Time_Of_Appointment TEXT NOT NULL, Booking_Timestamp TEXT NOT NULL, Status TEXT NOT NULL);
+INSERT INTO Appointment_Master (Appointment_ID, Patient_ID, Doctor_ID, Date_of_Appointment, Time_Of_Appointment, Booking_Timestamp, Status) VALUES (1, 'P1', 'D5', '12/8/2023', '1:00', '15:30', 'Confirnmed');
+INSERT INTO Appointment_Master (Appointment_ID, Patient_ID, Doctor_ID, Date_of_Appointment, Time_Of_Appointment, Booking_Timestamp, Status) VALUES (2, 'P2', 'D1', '12/8/2023', '14:00', '3:45', 'Cancelled');
+INSERT INTO Appointment_Master (Appointment_ID, Patient_ID, Doctor_ID, Date_of_Appointment, Time_Of_Appointment, Booking_Timestamp, Status) VALUES (3, 'P3', 'D3', '12/9/2023', '9:30', '14:20', 'Confirnmed');
+INSERT INTO Appointment_Master (Appointment_ID, Patient_ID, Doctor_ID, Date_of_Appointment, Time_Of_Appointment, Booking_Timestamp, Status) VALUES (4, 'P4', 'D4', '12/9/2023', '10:45', '16:30', 'Confirnmed');
+INSERT INTO Appointment_Master (Appointment_ID, Patient_ID, Doctor_ID, Date_of_Appointment, Time_Of_Appointment, Booking_Timestamp, Status) VALUES (5, 'P2', 'D1', '12/12/2023', '11:30', '8:00', 'Confirnmed');
+
+-- Table: Doctor_Master
+CREATE TABLE IF NOT EXISTS Doctor_Master (Doctor_ID TEXT PRIMARY KEY, Doctor_UserID TEXT UNIQUE NOT NULL, Doctor_Password TEXT NOT NULL, Doctor_Name TEXT NOT NULL, Doctor_Contact_Number NUMERIC NOT NULL UNIQUE, Doctor_EmailID TEXT NOT NULL UNIQUE, Doctor_Specialization TEXT NOT NULL);
+INSERT INTO Doctor_Master (Doctor_ID, Doctor_UserID, Doctor_Password, Doctor_Name, Doctor_Contact_Number, Doctor_EmailID, Doctor_Specialization) VALUES ('D1', 'michelle.brown@dummy.com', 'dpassword1', 'Michelle Brown', 1233214567, 'michelle.brown@dummy.com', 'Paediatrician');
+INSERT INTO Doctor_Master (Doctor_ID, Doctor_UserID, Doctor_Password, Doctor_Name, Doctor_Contact_Number, Doctor_EmailID, Doctor_Specialization) VALUES ('D2', 'sarah.parker@dummy.com', 'dpassword2', 'Sarah Parker', 9876541234, 'sarah.parker@dummy.com', 'Gynaecologist');
+INSERT INTO Doctor_Master (Doctor_ID, Doctor_UserID, Doctor_Password, Doctor_Name, Doctor_Contact_Number, Doctor_EmailID, Doctor_Specialization) VALUES ('D3', 'rdanve@umass.edu', 'dpassword3', 'Riya Danve', 6785431298, 'rdanve@umass.edu', 'General Physician');
+INSERT INTO Doctor_Master (Doctor_ID, Doctor_UserID, Doctor_Password, Doctor_Name, Doctor_Contact_Number, Doctor_EmailID, Doctor_Specialization) VALUES ('D4', 'max.smith@dummy.com', 'dpassword4', 'Max Smith', 6743126767, 'max.smith@dummy.com', 'General Physician');
+INSERT INTO Doctor_Master (Doctor_ID, Doctor_UserID, Doctor_Password, Doctor_Name, Doctor_Contact_Number, Doctor_EmailID, Doctor_Specialization) VALUES ('D5', 'brian.miller@dummy.com', 'dpassword5', 'Brian Miller', 8822994411, 'brian.miller@dummy.com', 'Cardiologist');
+
+-- Table: Health_History_Master
+CREATE TABLE IF NOT EXISTS Health_History_Master (Record_ID INTEGER PRIMARY KEY AUTOINCREMENT, Patient_ID TEXT REFERENCES Patient_Master (Patient_ID) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL, Systolic_Blood_Pressure INTEGER, Diastolic_Blood_Pressure INTEGER, Sugar_levels INTEGER, Heamoglobin INTEGER, Date_Of_Measurement TEXT NOT NULL, Consulting_Doctor REFERENCES Doctor_Master (Doctor_ID), Updated_By TEXT NOT NULL);
+INSERT INTO Health_History_Master (Record_ID, Patient_ID, Systolic_Blood_Pressure, Diastolic_Blood_Pressure, Sugar_levels, Heamoglobin, Date_Of_Measurement, Consulting_Doctor, Updated_By) VALUES (1, 'P1', 110, 77, 126, 13.3, '12/8/2023', 'D1', 'D1');
+INSERT INTO Health_History_Master (Record_ID, Patient_ID, Systolic_Blood_Pressure, Diastolic_Blood_Pressure, Sugar_levels, Heamoglobin, Date_Of_Measurement, Consulting_Doctor, Updated_By) VALUES (2, 'P1', 116, 79, 130, 12.2, '12/8/2023', 'D1', 'D1');
+INSERT INTO Health_History_Master (Record_ID, Patient_ID, Systolic_Blood_Pressure, Diastolic_Blood_Pressure, Sugar_levels, Heamoglobin, Date_Of_Measurement, Consulting_Doctor, Updated_By) VALUES (3, 'P1', 119, 80, 132, 14.8, '12/8/2023', 'D1', 'D1');
+INSERT INTO Health_History_Master (Record_ID, Patient_ID, Systolic_Blood_Pressure, Diastolic_Blood_Pressure, Sugar_levels, Heamoglobin, Date_Of_Measurement, Consulting_Doctor, Updated_By) VALUES (4, 'P2', 124, 73, 120, 16.9, '12/10/2023', 'D5', 'D5');
+INSERT INTO Health_History_Master (Record_ID, Patient_ID, Systolic_Blood_Pressure, Diastolic_Blood_Pressure, Sugar_levels, Heamoglobin, Date_Of_Measurement, Consulting_Doctor, Updated_By) VALUES (5, 'P2', 106, 75, 116, 11.4, '12/10/2023', 'D5', 'D5');
+
+-- Table: Patient_General_Demographics
+CREATE TABLE IF NOT EXISTS Patient_General_Demographics (Demographic_ID INTEGER PRIMARY KEY AUTOINCREMENT, Patient_ID TEXT REFERENCES Patient_Master (Patient_ID) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL, Patient_Height INTEGER NOT NULL, Patient_Weight INTEGER NOT NULL, Patient_Sex TEXT NOT NULL, Patient_BloodPressure INTEGER, Patient_Age INTEGER NOT NULL, Date_Of_Update TEXT NOT NULL, Updated_By TEXT NOT NULL);
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (1, 'P1', 180, 82, 'Male', NULL, 28, '10/6/2023', 'D3');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (2, 'P1', 180, 80, 'Male', NULL, 28, '11/15/2023', 'D3');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (3, 'P1', 180, 75, 'Male', NULL, 28, '12/9/2023', 'D3');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (4, 'P2', 167, 59, 'Female', NULL, 25, '9/9/2023', 'D2');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (5, 'P2', 167, 57, 'Female', NULL, 25, '10/9/2023', 'D2');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (6, 'P2', 167, 60, 'Female', NULL, 25, '11/9/2023', 'D2');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (7, 'P3', 186, 90, 'Male', NULL, 45, '1/1/2023', 'D5');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (8, 'P3', 186, 92, 'Male', NULL, 46, '5/3/2023', 'D5');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (9, 'P3', 186, 92, 'Male', NULL, 46, '12/10/2023', 'D5');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (10, 'P4', 137, 40, 'Male', NULL, 12, '4/15/2023', 'D1');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (11, 'P4', 138, 42, 'Male', NULL, 12, '9/16/2023', 'D1');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (12, 'P4', 138, 41, 'Male', NULL, 12, '12/7/2023', 'D1');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (13, 'P5', 177, 60, 'Male', NULL, 32, '3/15/2023', 'D4');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (14, 'P5', 177, 62, 'Male', NULL, 32, '4/22/2023', 'D4');
+INSERT INTO Patient_General_Demographics (Demographic_ID, Patient_ID, Patient_Height, Patient_Weight, Patient_Sex, Patient_BloodPressure, Patient_Age, Date_Of_Update, Updated_By) VALUES (15, 'P5', 177, 65, 'Male', NULL, 33, '5/2/2023', 'D4');
+
+-- Table: Patient_Master
+CREATE TABLE IF NOT EXISTS Patient_Master (Patient_ID TEXT PRIMARY KEY, Patient_UserID TEXT UNIQUE NOT NULL, Patient_Password TEXT NOT NULL, Patient_Name TEXT NOT NULL, Patient_Contact_Number NUMERIC NOT NULL UNIQUE, Patient_EmailID TEXT NOT NULL UNIQUE);
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P1', 'nm@dummy.com', 'password1', 'Nathaniel Martinez', 4364526060, 'nm@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P2', 'mn@dummy.com', 'password2', 'Maya Nolan', 6473589678, 'mn@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P3', 'jas_little@dummy.com', 'password3', 'Jason Little', 4138898787, 'jas_little@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P4', 'kthomp@dummy.com', 'password4', 'Kasimir Thompson', 7268672345, 'kthomp@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P5', 'ramirezkameko@dummy.com', 'password5', 'Kameko Ramirez', 5678932211, 'ramirezkameko@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P6', 'psubra10@dummy.com', 'password6', 'Priya Subramaniam', 8769761212, 'psubra10@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P7', 'hermmack@dummy.com', 'password7', 'Herman Mack', 3214567890, 'hermmack@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P8', 'asmith@dummy.com', 'password8', 'Alex Smith', 1234567890, 'asmith@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P9', 'blycar@dummy.com', 'password9', 'Blythe Carpenter', 2123546798, 'blycar@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P10', 'agashemandar11@dummy.com', 'password10', 'Mandar Agashe', 4568906565, 'agashemandar11@dummy.com');
+INSERT INTO Patient_Master (Patient_ID, Patient_UserID, Patient_Password, Patient_Name, Patient_Contact_Number, Patient_EmailID) VALUES ('P11', 'riyarajeshde@umass.edu', 'password11', 'Riya Deshpande', 1239087635, 'riyarajeshde@umass.edu');
+
+-- Table: Patient_Prescription_Data
+CREATE TABLE IF NOT EXISTS Patient_Prescription_Data (Prescription_ID INTEGER PRIMARY KEY AUTOINCREMENT, Patient_ID REFERENCES Patient_Master (Patient_ID) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL, Doctor_ID REFERENCES Doctor_Master (Doctor_ID) ON DELETE CASCADE ON UPDATE CASCADE NOT NULL, Date_Of_Consultation TEXT NOT NULL, Primary_Ailment TEXT NOT NULL, Symptom_description TEXT NOT NULL, Medicine_1 TEXT, Medicine_2 TEXT, Dosage_1 TEXT, Dosage_2 TEXT);
+INSERT INTO Patient_Prescription_Data (Prescription_ID, Patient_ID, Doctor_ID, Date_Of_Consultation, Primary_Ailment, Symptom_description, Medicine_1, Medicine_2, Dosage_1, Dosage_2) VALUES (1, 'P1', 'D3', '10/6/2023', 'Allergy', 'Urticaria, inflammation', 'Allegra', '', 'Twice a day', '');
+INSERT INTO Patient_Prescription_Data (Prescription_ID, Patient_ID, Doctor_ID, Date_Of_Consultation, Primary_Ailment, Symptom_description, Medicine_1, Medicine_2, Dosage_1, Dosage_2) VALUES (2, 'P2', 'D2', '11/9/2023', 'Routine checkup', 'N/A', '', '', '', '');
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;
