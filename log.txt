@@ -1,3 +1,9 @@
+commit d692c50b7141705dcf948c7785e5a7c71c243df4
+Author: riyaadsul <radsul@umass.edu>
+Date:   Mon Dec 11 19:18:58 2023 -0500
+
+    added git log file
+
 commit 46618b4617e2649e0badc7015596250690d75a7a
 Author: riyaadsul <radsul@umass.edu>
 Date:   Mon Dec 11 19:05:53 2023 -0500
