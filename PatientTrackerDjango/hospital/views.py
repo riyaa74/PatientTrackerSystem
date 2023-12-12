@@ -98,19 +98,29 @@ def patient_signup_view(request):
 
 
 
-
+#CHANGES MADE
 
 #-----------for checking user is doctor , patient or admin
 def is_admin(user):
     return user.groups.filter(name='ADMIN').exists()
+
 def is_doctor(user):
-    return user.groups.filter(name='DOCTOR').exists()
+    print(f"User: {user}")
+    print(f"UserGroups: {user.groups}")
+    if (user.groups.filter(name='DOCTOR').exists()):
+        return True
+    else:
+        print(f"Printed: {user.groups.filter(name='DOCTOR')}")
+        return False
+    
 def is_patient(user):
     return user.groups.filter(name='PATIENT').exists()
 
 
 #---------AFTER ENTERING CREDENTIALS WE CHECK WHETHER USERNAME AND PASSWORD IS OF ADMIN,DOCTOR OR PATIENT
 def afterlogin_view(request):
+    print(f"User: {request.user}, is_admin: {is_admin(request.user)}, is_doctor: {is_doctor(request.user)}, is_patient: {is_patient(request.user)}")
+    
     if is_admin(request.user):
         return redirect('admin-dashboard')
     elif is_doctor(request.user):
@@ -125,7 +135,9 @@ def afterlogin_view(request):
             return redirect('patient-dashboard')
         else:
             return render(request,'hospital/patient_wait_for_approval.html')
-    else: return render(request,'hospital/index.html')
+    else:
+        print("No role matched. Redirecting to index.html") 
+        return render(request,'hospital/index.html')
 
 
 
