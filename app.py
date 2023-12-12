@@ -39,7 +39,7 @@ class RegisterForm(FlaskForm):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_copy.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -76,7 +76,7 @@ def signup():
 # @login_required
 def dashboard():
     # return render_template('dashboard.html', name=current_user.username)
-    return render_template('dashboard.html')
+    return render_template('index_copy.html')
 # *************************************************************************************************************************************
 
 @app.route('/department')
