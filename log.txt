@@ -1,0 +1,137 @@
+commit 46618b4617e2649e0badc7015596250690d75a7a
+Author: riyaadsul <radsul@umass.edu>
+Date:   Mon Dec 11 19:05:53 2023 -0500
+
+    Created Django project and added previously made html files to it
+
+commit f6e0ff7c5d473579d082f73deaafe8a101f4f70a
+Author: riyadanve <riyardanve@gmail.com>
+Date:   Sun Dec 10 02:01:05 2023 -0500
+
+    db export 4
+
+commit 918f06d1c3f7ee9ac8fd89eccfe484ca0d70c944
+Author: riyadanve <riyardanve@gmail.com>
+Date:   Sun Dec 10 01:59:34 2023 -0500
+
+    updated records and inserted data for two tables
+
+commit 2224e38cfe327654f986a5ac848135554860613a
+Author: Riya Deshpande <riyadeshpande10@gmail.com>
+Date:   Sun Dec 10 00:54:24 2023 -0500
+
+    Added latest DB snapshot
+
+commit 65037c505a48b3401b2929d820b6047c9417bb1d
+Author: Riya Deshpande <riyadeshpande10@gmail.com>
+Date:   Sun Dec 10 00:28:59 2023 -0500
+
+    Updted LLD doc
+
+commit 0ad57b35126647ce90b7bed213f853f9a30c7251
+Author: Riya Deshpande <riyadeshpande10@gmail.com>
+Date:   Fri Nov 3 00:02:39 2023 -0400
+
+    additional changes to deliverables
+
+commit a0004fa2c11665514f7bad4f9fdd10c2f92cfd95
+Author: Riya Deshpande <riyadeshpande10@gmail.com>
+Date:   Thu Nov 2 23:40:33 2023 -0400
+
+    Report changes final
+
+commit b7700c413e213035a92fb395b3fadb5a2e841996
+Author: Riya Deshpande <riyadeshpande10@gmail.com>
+Date:   Thu Nov 2 23:31:35 2023 -0400
+
+    Pushing the video presentation
+
+commit cdf7ddee98d04deb91db230bd2432e8c95b8f51c
+Author: Mitali Prakash Juvekar <mitalijuvekar@Mitalis-MacBook-Air.local>
+Date:   Thu Nov 2 23:25:23 2023 -0400
+
+    Final Midpoint Report Created.
+
+commit 93a357d6e0d3c0c95cc3da0cf278edf77366feb4
+Author: riyaadsul <radsul@umass.edu>
+Date:   Thu Nov 2 20:37:40 2023 -0400
+
+    Added UI pages for dashbaords, blogs, appointment page and login and registration page of user and doctor to the app
+
+commit 690d47724934453326849f8a0a41ed5ece758f5e
+Author: riyaadsul <radsul@umass.edu>
+Date:   Thu Nov 2 20:34:34 2023 -0400
+
+    Created main landing page, integrated app with SQLite 3 database
+
+commit 2b7fc364566201ce1832af020484754783acbe99
+Author: riyaadsul <radsul@umass.edu>
+Date:   Thu Nov 2 19:51:06 2023 -0400
+
+    Created flask app structure and basic html architecture for the patient tracker system application
+
+commit 7bb56cdcac1057f39c1046b22a00454b7fafe2bd
+Author: Mitali Prakash Juvekar <mitalijuvekar@1x-nat-vl931-172-30-154-177.wireless.umass.edu>
+Date:   Thu Nov 2 16:13:25 2023 -0400
+
+    Workplan file and Report edited.
+
+commit 07b154d1467489e6ff51fcbf126b2ea68558a976
+Author: riyadanve <86950420+riyadanve@users.noreply.github.com>
+Date:   Thu Nov 2 11:17:14 2023 -0400
+
+    added project workplan
+
+commit abc794ccd45f427360ed17327f595fa4fc21c807
+Author: Mitali Prakash Juvekar <mitalijuvekar@1x-nat-vl931-172-30-154-177.wireless.umass.edu>
+Date:   Thu Nov 2 10:27:37 2023 -0400
+
+    Previous report deleted and new report with modifications added.
+
+commit 40fbc8902e21fa76c5db5bfb027c9cd268051b09
+Author: Mitali Prakash Juvekar <mitalijuvekar@Mitalis-MacBook-Air.local>
+Date:   Thu Nov 2 04:56:01 2023 -0400
+
+    Edited the report.
+
+commit 16ab22e7cac83439d7a5fe553f25929f884c2824
+Author: riyadanve <86950420+riyadanve@users.noreply.github.com>
+Date:   Thu Nov 2 00:16:34 2023 -0400
+
+    added tech stack details in the report
+
+commit cc0076ad284adc336d78ac8c9b9d082cac84cf27
+Author: riyadanve <86950420+riyadanve@users.noreply.github.com>
+Date:   Wed Nov 1 22:46:57 2023 -0400
+
+    Added UI Mockups and implementation in the report
+
+commit 95c8e8207d8d5a2862e621ed6bf372abbfe4cb8e
+Author: Riya Deshpande <riyadeshpande10@gmail.com>
+Date:   Wed Nov 1 22:26:10 2023 -0400
+
+    Updated midpoint report
+
+commit 830657c64815d2fd37e728091892857e1a6953bb
+Author: riyadanve <86950420+riyadanve@users.noreply.github.com>
+Date:   Wed Nov 1 22:09:01 2023 -0400
+
+    added raw report
+
+commit 065e8b81381cb1f751743aa9ba9661c67a46e47c
+Author: riyadanve <86950420+riyadanve@users.noreply.github.com>
+Date:   Wed Nov 1 21:59:47 2023 -0400
+
+    added UI mockups
+
+commit da0437a514fdc492e9cb4201679859f30f9f848f
+Author: Riya Deshpande <riyadeshpande10@gmail.com>
+Date:   Wed Nov 1 20:30:46 2023 -0400
+
+    Pushing the design documents
+
+commit 10da8b61d5a113194e612e7d998b88eb62d7ed03
+Author: Riya Adsul <64779450+riyaa74@users.noreply.github.com>
+Date:   Tue Oct 3 15:38:07 2023 -0400
+
+    Initial commit
