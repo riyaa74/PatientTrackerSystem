@@ -134,9 +134,9 @@ def afterlogin_view(request):
             return redirect('patient-dashboard')
         else:
             return render(request,'hospital/patient_wait_for_approval.html')
-    # else:
-    #     print("No role matched. Redirecting to index.html") 
-    #     return render(request,'hospital/index.html')
+    else:
+        print("No role matched. Redirecting to index.html") 
+        return render(request,'hospital/index.html')
 
 
 
