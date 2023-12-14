@@ -118,7 +118,7 @@
         <table>
           <tr>
             <td class="title">
-              <h1>Hospital Management</h1>
+              <h1> Patient Tracker System</h1>
             </td>
 
             <td>
@@ -221,7 +221,7 @@
       <td></td>
 
       <td>
-        Total Rupees : {{total}}
+        Total Dollars : {{total}}
       </td>
     </tr>
 
@@ -229,12 +229,8 @@
 </div>
 <br><br>
 <div class="download">
-  <a style="background:red; width:500px;" href="{% url 'download-pdf' patientId  %}">Download</a>
+  <a style="background:blue; width:500px;" href="{% url 'download-pdf' patientId  %}">Download</a>
 </div>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
+ 
 
 {% endblock content %}

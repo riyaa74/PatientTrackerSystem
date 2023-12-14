@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>LazyCoder || sumit</title>
+  <title>MRCube</title>
 
 
   <style type="text/css">
@@ -57,7 +57,6 @@
   <br>
   <br><br>
 
-  <!--- login page for doctor by admin(sumit)  ---------->
   <form method="post">
     {% csrf_token %}
     <div class="container register-form">
@@ -83,7 +82,10 @@
 
             </div>
           </div>
+          <div class="text-center">
           <button type="submit" class="btnSubmit">Login</button>
+        </div>
+        <br>
           <div class="text-center">Do not have account? <a href="doctorsignup">Signup here</a></div>
         </div>
       </div>
@@ -92,11 +94,7 @@
   </form>
 
   <br><br><br>
-  <!--
-  developed By : sumit kumar
-  facebook : fb.com/sumit.luv
-  youtube : youtube.com/lazycoders
-  -->
+   
 
   {% include "hospital/footer.html" %}
 </body>

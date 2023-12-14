@@ -59,9 +59,6 @@
   <br>
 
 
-
-
-  <!--- signup page for patient by admin(sumit)  ---------->
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="container register-form">
@@ -105,7 +102,10 @@
 
             </div>
           </div>
+          <div class="text-center">
           <button type="submit" class="btnSubmit">Register</button>
+          </div>
+          <br>
           <div class="text-center">Already have an account? <a href="patientlogin">Login here</a></div>
         </div>
       </div>

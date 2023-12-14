@@ -1,5 +1,5 @@
 
-# Hospital Management
+# Patient Tracker System
 
 ### Admin
 - Signup 
