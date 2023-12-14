@@ -8,6 +8,10 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from datetime import datetime,timedelta,date
 from django.conf import settings
 from django.db.models import Q
+from django.contrib.auth.models import User
+from django.shortcuts import render
+
+
 
 # Create your views here.
 def home_view(request):
@@ -38,61 +42,109 @@ def patientclick_view(request):
 
 
 
+# def admin_signup_view(request):
+#     form=forms.AdminSigupForm()
+#     if request.method=='POST':
+#         form=forms.AdminSigupForm(request.POST)
+#         if form.is_valid():
+#             user=form.save()
+#             user.set_password(user.password)
+#             user.save()
+#             my_admin_group = Group.objects.get_or_create(name='ADMIN')
+#             my_admin_group[0].user_set.add(user)
+#             return HttpResponseRedirect('adminlogin')
+#     return render(request,'hospital/adminsignup.html',{'form':form})
+
 def admin_signup_view(request):
-    form=forms.AdminSigupForm()
-    if request.method=='POST':
-        form=forms.AdminSigupForm(request.POST)
+    form = forms.AdminSigupForm()
+
+    if request.method == 'POST':
+        form = forms.AdminSigupForm(request.POST)
+
         if form.is_valid():
-            user=form.save()
+            username = form.cleaned_data['username']
+
+            # Check if the username already exists
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'error': 'Username already taken'})
+
+            user = form.save()
             user.set_password(user.password)
             user.save()
+
             my_admin_group = Group.objects.get_or_create(name='ADMIN')
             my_admin_group[0].user_set.add(user)
-            return HttpResponseRedirect('adminlogin')
-    return render(request,'hospital/adminsignup.html',{'form':form})
 
+            return HttpResponseRedirect('adminlogin')
+
+    return render(request, 'hospital/adminsignup.html', {'form': form})
 
 
 
 def doctor_signup_view(request):
-    userForm=forms.DoctorUserForm()
-    doctorForm=forms.DoctorForm()
-    mydict={'userForm':userForm,'doctorForm':doctorForm}
-    if request.method=='POST':
-        userForm=forms.DoctorUserForm(request.POST)
-        doctorForm=forms.DoctorForm(request.POST,request.FILES)
+    userForm = forms.DoctorUserForm()
+    doctorForm = forms.DoctorForm()
+    mydict = {'userForm': userForm, 'doctorForm': doctorForm}
+
+    if request.method == 'POST':
+        userForm = forms.DoctorUserForm(request.POST)
+        doctorForm = forms.DoctorForm(request.POST, request.FILES)
+
         if userForm.is_valid() and doctorForm.is_valid():
-            user=userForm.save()
+            username = userForm.cleaned_data['username']
+
+            # Check if the username already exists
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'error': 'Username already taken'})
+
+            user = userForm.save()
             user.set_password(user.password)
             user.save()
-            doctor=doctorForm.save(commit=False)
-            doctor.user=user
-            doctor=doctor.save()
+
+            doctor = doctorForm.save(commit=False)
+            doctor.user = user
+            doctor.save()
+
             my_doctor_group = Group.objects.get_or_create(name='DOCTOR')
             my_doctor_group[0].user_set.add(user)
-        return HttpResponseRedirect('doctorlogin')
-    return render(request,'hospital/doctorsignup.html',context=mydict)
+
+            return HttpResponseRedirect('doctorlogin')
+    return render(request, 'hospital/doctorsignup.html', context=mydict)
 
 
+from django.http import JsonResponse
 def patient_signup_view(request):
-    userForm=forms.PatientUserForm()
-    patientForm=forms.PatientForm()
-    mydict={'userForm':userForm,'patientForm':patientForm}
-    if request.method=='POST':
-        userForm=forms.PatientUserForm(request.POST)
-        patientForm=forms.PatientForm(request.POST,request.FILES)
+    userForm = forms.PatientUserForm()
+    patientForm = forms.PatientForm()
+    mydict = {'userForm': userForm, 'patientForm': patientForm}
+
+    if request.method == 'POST':
+        userForm = forms.PatientUserForm(request.POST)
+        patientForm = forms.PatientForm(request.POST, request.FILES)
+
         if userForm.is_valid() and patientForm.is_valid():
-            user=userForm.save()
+            username = userForm.cleaned_data['username']
+
+            # Check if the username already exists
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'error': 'Username already taken'})
+
+            user = userForm.save()
             user.set_password(user.password)
             user.save()
-            patient=patientForm.save(commit=False)
-            patient.user=user
-            patient.assignedDoctorId=request.POST.get('assignedDoctorId')
-            patient=patient.save()
+
+            patient = patientForm.save(commit=False)
+            patient.user = user
+            patient.assignedDoctorId = request.POST.get('assignedDoctorId')
+            patient.save()
+
             my_patient_group = Group.objects.get_or_create(name='PATIENT')
             my_patient_group[0].user_set.add(user)
-        return HttpResponseRedirect('patientlogin')
-    return render(request,'hospital/patientsignup.html',context=mydict)
+
+            # Return both HTML content and success message
+            return HttpResponseRedirect('patientlogin')
+
+    return render(request, 'hospital/patientsignup.html', context=mydict)
 
 
 
@@ -412,52 +464,118 @@ def admin_discharge_patient_view(request):
 
 
 
+# @login_required(login_url='adminlogin')
+# @user_passes_test(is_admin)
+# def discharge_patient_view(request,pk):
+#     patient=models.Patient.objects.get(id=pk)
+#     days=(date.today()-patient.admitDate) #2 days, 0:00:00
+#     assignedDoctor=models.User.objects.all().filter(id=patient.assignedDoctorId)
+#     d=days.days # only how many day that is 2
+#     patientDict={
+#         'patientId':pk,
+#         'name':patient.get_name,
+#         'mobile':patient.mobile,
+#         'address':patient.address,
+#         'symptoms':patient.symptoms,
+#         'admitDate':patient.admitDate,
+#         'todayDate':date.today(),
+#         'day':d,
+#         'assignedDoctorName':assignedDoctor[0].first_name,
+#     }
+#     if request.method == 'POST':
+#         feeDict ={
+#             'roomCharge':int(request.POST['roomCharge'])*int(d),
+#             'doctorFee':request.POST['doctorFee'],
+#             'medicineCost' : request.POST['medicineCost'],
+#             'OtherCharge' : request.POST['OtherCharge'],
+#             'total':(int(request.POST['roomCharge'])*int(d))+int(request.POST['doctorFee'])+int(request.POST['medicineCost'])+int(request.POST['OtherCharge'])
+#         }
+#         patientDict.update(feeDict)
+#         #for updating to database patientDischargeDetails (pDD)
+#         pDD=models.PatientDischargeDetails()
+#         pDD.patientId=pk
+#         pDD.patientName=patient.get_name
+#         pDD.assignedDoctorName=assignedDoctor[0].first_name
+#         pDD.address=patient.address
+#         pDD.mobile=patient.mobile
+#         pDD.symptoms=patient.symptoms
+#         pDD.admitDate=patient.admitDate
+#         pDD.releaseDate=date.today()
+#         pDD.daySpent=int(d)
+#         pDD.medicineCost=int(request.POST['medicineCost'])
+#         pDD.roomCharge=int(request.POST['roomCharge'])*int(d)
+#         pDD.doctorFee=int(request.POST['doctorFee'])
+#         pDD.OtherCharge=int(request.POST['OtherCharge'])
+#         pDD.total=(int(request.POST['roomCharge'])*int(d))+int(request.POST['doctorFee'])+int(request.POST['medicineCost'])+int(request.POST['OtherCharge'])
+#         pDD.save()
+#         return render(request,'hospital/patient_final_bill.html',context=patientDict)
+#     return render(request,'hospital/patient_generate_bill.html',context=patientDict)
+
+
+from django.contrib import messages
+
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
-def discharge_patient_view(request,pk):
-    patient=models.Patient.objects.get(id=pk)
-    days=(date.today()-patient.admitDate) #2 days, 0:00:00
-    assignedDoctor=models.User.objects.all().filter(id=patient.assignedDoctorId)
-    d=days.days # only how many day that is 2
-    patientDict={
-        'patientId':pk,
-        'name':patient.get_name,
-        'mobile':patient.mobile,
-        'address':patient.address,
-        'symptoms':patient.symptoms,
-        'admitDate':patient.admitDate,
-        'todayDate':date.today(),
-        'day':d,
-        'assignedDoctorName':assignedDoctor[0].first_name,
+def discharge_patient_view(request, pk):
+    patient = models.Patient.objects.get(id=pk)
+    days = (date.today() - patient.admitDate).days
+    assignedDoctor = models.User.objects.all().filter(id=patient.assignedDoctorId)
+    patientDict = {
+        'patientId': pk,
+        'name': patient.get_name,
+        'mobile': patient.mobile,
+        'address': patient.address,
+        'symptoms': patient.symptoms,
+        'admitDate': patient.admitDate,
+        'todayDate': date.today(),
+        'day': days,
+        'assignedDoctorName': assignedDoctor[0].first_name,
     }
+
     if request.method == 'POST':
-        feeDict ={
-            'roomCharge':int(request.POST['roomCharge'])*int(d),
-            'doctorFee':request.POST['doctorFee'],
-            'medicineCost' : request.POST['medicineCost'],
-            'OtherCharge' : request.POST['OtherCharge'],
-            'total':(int(request.POST['roomCharge'])*int(d))+int(request.POST['doctorFee'])+int(request.POST['medicineCost'])+int(request.POST['OtherCharge'])
-        }
-        patientDict.update(feeDict)
-        #for updating to database patientDischargeDetails (pDD)
-        pDD=models.PatientDischargeDetails()
-        pDD.patientId=pk
-        pDD.patientName=patient.get_name
-        pDD.assignedDoctorName=assignedDoctor[0].first_name
-        pDD.address=patient.address
-        pDD.mobile=patient.mobile
-        pDD.symptoms=patient.symptoms
-        pDD.admitDate=patient.admitDate
-        pDD.releaseDate=date.today()
-        pDD.daySpent=int(d)
-        pDD.medicineCost=int(request.POST['medicineCost'])
-        pDD.roomCharge=int(request.POST['roomCharge'])*int(d)
-        pDD.doctorFee=int(request.POST['doctorFee'])
-        pDD.OtherCharge=int(request.POST['OtherCharge'])
-        pDD.total=(int(request.POST['roomCharge'])*int(d))+int(request.POST['doctorFee'])+int(request.POST['medicineCost'])+int(request.POST['OtherCharge'])
-        pDD.save()
-        return render(request,'hospital/patient_final_bill.html',context=patientDict)
-    return render(request,'hospital/patient_generate_bill.html',context=patientDict)
+        try:
+            room_charge = int(request.POST['roomCharge']) * days
+            doctor_fee = int(request.POST['doctorFee'])
+            medicine_cost = int(request.POST['medicineCost'])
+            other_charge = int(request.POST['OtherCharge'])
+
+            total = room_charge + doctor_fee + medicine_cost + other_charge
+
+            feeDict = {
+                'roomCharge': room_charge,
+                'doctorFee': doctor_fee,
+                'medicineCost': medicine_cost,
+                'OtherCharge': other_charge,
+                'total': total,
+            }
+
+            patientDict.update(feeDict)
+
+            pDD = models.PatientDischargeDetails()
+            pDD.patientId = pk
+            pDD.patientName = patient.get_name
+            pDD.assignedDoctorName = assignedDoctor[0].first_name
+            pDD.address = patient.address
+            pDD.mobile = patient.mobile
+            pDD.symptoms = patient.symptoms
+            pDD.admitDate = patient.admitDate
+            pDD.releaseDate = date.today()
+            pDD.daySpent = days
+            pDD.medicineCost = medicine_cost
+            pDD.roomCharge = room_charge
+            pDD.doctorFee = doctor_fee
+            pDD.OtherCharge = other_charge
+            pDD.total = total
+            pDD.save()
+
+            return render(request, 'hospital/patient_final_bill.html', context=patientDict)
+        except ValueError:
+            messages.error(request, 'Please enter valid numeric values for all fields.')
+            # Redirect or render the same page with an error message
+            return render(request, 'hospital/patient_generate_bill.html', context=patientDict)
+
+    return render(request, 'hospital/patient_generate_bill.html', context=patientDict)
+
 
 
 
