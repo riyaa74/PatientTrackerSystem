@@ -5,6 +5,9 @@ from . import models
 
 
 #for admin signup
+"""
+Form for admin signup 
+"""
 class AdminSigupForm(forms.ModelForm):
     class Meta:
         model=User
@@ -14,7 +17,9 @@ class AdminSigupForm(forms.ModelForm):
         }
 
 
-#for student related form
+"""
+Form for doctor signup 
+"""
 class DoctorUserForm(forms.ModelForm):
     class Meta:
         model=User
@@ -28,8 +33,9 @@ class DoctorForm(forms.ModelForm):
         fields=['address','mobile','department','status','profile_pic']
 
 
-
-#for teacher related form
+"""
+Patient Related form 
+"""
 class PatientUserForm(forms.ModelForm):
     class Meta:
         model=User
@@ -47,7 +53,9 @@ class PatientForm(forms.ModelForm):
         fields=['address','mobile','status','symptoms','profile_pic']
 
 
-
+"""
+Appointment fields form
+"""
 class AppointmentForm(forms.ModelForm):
     doctorId=forms.ModelChoiceField(queryset=models.Doctor.objects.all().filter(status=True),empty_label="Doctor Name and Department", to_field_name="user_id")
     patientId=forms.ModelChoiceField(queryset=models.Patient.objects.all().filter(status=True),empty_label="Patient Name and Symptoms", to_field_name="user_id")

@@ -10,6 +10,10 @@ departments=[('Cardiologist','Cardiologist'),
 ('Anesthesiologists','Anesthesiologists'),
 ('Colon and Rectal Surgeons','Colon and Rectal Surgeons')
 ]
+
+"""
+Data model for doctor 
+"""
 class Doctor(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic= models.ImageField(upload_to='profile_pic/DoctorProfilePic/',null=True,blank=True)
@@ -27,7 +31,9 @@ class Doctor(models.Model):
         return "{} ({})".format(self.user.first_name,self.department)
 
 
-
+"""
+Data model for patient 
+"""
 class Patient(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic= models.ImageField(upload_to='profile_pic/PatientProfilePic/',null=True,blank=True)
@@ -46,7 +52,9 @@ class Patient(models.Model):
     def __str__(self):
         return self.user.first_name+" ("+self.symptoms+")"
 
-
+"""
+Data model for appointment 
+"""
 class Appointment(models.Model):
     patientId=models.PositiveIntegerField(null=True)
     doctorId=models.PositiveIntegerField(null=True)
@@ -57,7 +65,9 @@ class Appointment(models.Model):
     status=models.BooleanField(default=False)
 
 
-
+"""
+Data model for patient's discharde details 
+"""
 class PatientDischargeDetails(models.Model):
     patientId=models.PositiveIntegerField(null=True)
     patientName=models.CharField(max_length=40)

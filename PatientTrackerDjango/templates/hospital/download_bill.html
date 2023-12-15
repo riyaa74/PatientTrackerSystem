@@ -22,12 +22,12 @@
       max-width: 800px;
       margin: auto;
       padding: 30px;
-      border: 1px solid #eee;
+      border: 1px solid #797272;
       box-shadow: 0 0 10px rgba(0, 0, 0, .15);
       font-size: 16px;
       line-height: 24px;
       font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-      color: #555;
+      color: #a99c9c;
     }
 
     .invoice-box table {
@@ -70,7 +70,7 @@
     }
 
     .invoice-box table tr.item td {
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #aba1a1;
     }
 
     .invoice-box table tr.item.last td {
@@ -78,7 +78,7 @@
     }
 
     .invoice-box table tr.total td:nth-child(2) {
-      border-top: 2px solid #eee;
+      border-top: 2px solid #6e6b6b;
       font-weight: bold;
     }
 
@@ -179,10 +179,10 @@
             <tr>
               <td>
                 Charges :<br><br>
-                Room Charge of {{daySpent}} Days : {{roomCharge}}<br>
-                Doctor Fee : {{doctorFee}}<br>
-                Medicine Cost : {{medicineCost}}<br>
-                Other Charge : {{OtherCharge}} <br><br>
+                Charge for room - {{daySpent}} Days : {{roomCharge}}<br>
+                Fees for Doctor : {{doctorFee}}<br>
+                Cost of Medicines used : {{medicineCost}}<br>
+                Other Charges : {{OtherCharge}} <br><br>
                 &nbsp &nbsp &nbsp &nbsp &nbsp Total Dollars : {{total}}
               </td>
             </tr>

@@ -3,7 +3,9 @@ from django.urls import path
 from hospital import views
 from django.contrib.auth.views import LoginView,LogoutView
 
-
+"""
+the urlpatterns have the url paths for each ui that we have in the project
+"""
 #-------------FOR ADMIN RELATED URLS
 urlpatterns = [
     path('admin/', admin.site.urls),

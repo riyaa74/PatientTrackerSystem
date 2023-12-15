@@ -12,30 +12,39 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 
 
-
-# Create your views here.
 def home_view(request):
+    """
+    Create your views here
+    """
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return render(request,'hospital/index.html')
 
 
-#for showing signup/login button for admin
+
 def adminclick_view(request):
+    """
+    for showing signup/login button for admin
+    """
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return render(request,'hospital/adminclick.html')
 
 
-#for showing signup/login button for doctor
 def doctorclick_view(request):
+    """
+    for showing signup/login button for doctor
+    """
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return render(request,'hospital/doctorclick.html')
 
 
-#for showing signup/login button for patient
+
 def patientclick_view(request):
+    """
+    for showing signup/login button for patient
+    """
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return render(request,'hospital/patientclick.html')
@@ -100,8 +109,11 @@ def doctor_signup_view(request):
 
 #CHANGES MADE
 
-#-----------for checking user is doctor , patient or admin
+
 def is_admin(user):
+    """
+    for checking user is doctor , patient or admin
+    """
     return user.groups.filter(name='ADMIN').exists()
 
 def is_doctor(user):
