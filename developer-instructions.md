@@ -24,7 +24,9 @@
 ---
 
 ## Running our Project
-
+```
+Make your own virtual environment and Install the requirements.txt file 
+```
 py manage.py makemigrations
 py manage.py migrate
 python manage.py runserver
