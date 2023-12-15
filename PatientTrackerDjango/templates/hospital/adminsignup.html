@@ -91,7 +91,6 @@
           <div class="text-center">
           <button type="submit" class="btnSubmit">Submit</button>
           </div>
-          <div id="error-message" style="color: red;"></div>
           <br>
           <div class="text-center">Already have an account? <a href="adminlogin">Login here</a></div>
         </div>
@@ -99,43 +98,6 @@
     </div>
 
   </form>
-  <script>
-    function displayErrorMessage(message) {
-      document.getElementById('error-message').textContent = message;
-    }
-  
-    function handleSubmit(form) {
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-  
-        fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-        })
-        .then(response => response.json())
-        .then(data => {
-          // Check if the response contains an error
-          if (data.error) {
-            displayErrorMessage(data.error);
-          } else {
-            // No error, update the content as needed
-            document.body.innerHTML = data.html_content;
-          }
-        })
-        .catch(error => {
-          displayErrorMessage('This username already exists. Please create a new username');
-        });
-      });
-    }
-  
-    document.addEventListener('DOMContentLoaded', function() {
-      // Assuming there's only one form on the page
-      var form = document.querySelector('form');
-      if (form) {
-        handleSubmit(form);
-      }
-    });
-  </script>
    
 
   {% include "hospital/footer.html" %}

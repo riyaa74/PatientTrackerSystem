@@ -41,111 +41,60 @@ def patientclick_view(request):
     return render(request,'hospital/patientclick.html')
 
 
-
-# def admin_signup_view(request):
-#     form=forms.AdminSigupForm()
-#     if request.method=='POST':
-#         form=forms.AdminSigupForm(request.POST)
-#         if form.is_valid():
-#             user=form.save()
-#             user.set_password(user.password)
-#             user.save()
-#             my_admin_group = Group.objects.get_or_create(name='ADMIN')
-#             my_admin_group[0].user_set.add(user)
-#             return HttpResponseRedirect('adminlogin')
-#     return render(request,'hospital/adminsignup.html',{'form':form})
-
 def admin_signup_view(request):
-    form = forms.AdminSigupForm()
-
-    if request.method == 'POST':
-        form = forms.AdminSigupForm(request.POST)
-
+    form=forms.AdminSigupForm()
+    if request.method=='POST':
+        form=forms.AdminSigupForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-
-            # Check if the username already exists
-            if User.objects.filter(username=username).exists():
-                return JsonResponse({'error': 'Username already taken'})
-
-            user = form.save()
+            user=form.save()
             user.set_password(user.password)
             user.save()
-
             my_admin_group = Group.objects.get_or_create(name='ADMIN')
             my_admin_group[0].user_set.add(user)
-
             return HttpResponseRedirect('adminlogin')
+    return render(request,'hospital/adminsignup.html',{'form':form})
 
-    return render(request, 'hospital/adminsignup.html', {'form': form})
 
+
+def patient_signup_view(request):
+    userForm=forms.PatientUserForm()
+    patientForm=forms.PatientForm()
+    mydict={'userForm':userForm,'patientForm':patientForm}
+    if request.method=='POST':
+        userForm=forms.PatientUserForm(request.POST)
+        patientForm=forms.PatientForm(request.POST,request.FILES)
+        if userForm.is_valid() and patientForm.is_valid():
+            user=userForm.save()
+            user.set_password(user.password)
+            user.save()
+            patient=patientForm.save(commit=False)
+            patient.user=user
+            patient.assignedDoctorId=request.POST.get('assignedDoctorId')
+            patient=patient.save()
+            my_patient_group = Group.objects.get_or_create(name='PATIENT')
+            my_patient_group[0].user_set.add(user)
+        return HttpResponseRedirect('patientlogin')
+    return render(request,'hospital/patientsignup.html',context=mydict)
 
 
 def doctor_signup_view(request):
-    userForm = forms.DoctorUserForm()
-    doctorForm = forms.DoctorForm()
-    mydict = {'userForm': userForm, 'doctorForm': doctorForm}
-
-    if request.method == 'POST':
-        userForm = forms.DoctorUserForm(request.POST)
-        doctorForm = forms.DoctorForm(request.POST, request.FILES)
-
+    userForm=forms.DoctorUserForm()
+    doctorForm=forms.DoctorForm()
+    mydict={'userForm':userForm,'doctorForm':doctorForm}
+    if request.method=='POST':
+        userForm=forms.DoctorUserForm(request.POST)
+        doctorForm=forms.DoctorForm(request.POST,request.FILES)
         if userForm.is_valid() and doctorForm.is_valid():
-            username = userForm.cleaned_data['username']
-
-            # Check if the username already exists
-            if User.objects.filter(username=username).exists():
-                return JsonResponse({'error': 'Username already taken'})
-
-            user = userForm.save()
+            user=userForm.save()
             user.set_password(user.password)
             user.save()
-
-            doctor = doctorForm.save(commit=False)
-            doctor.user = user
-            doctor.save()
-
+            doctor=doctorForm.save(commit=False)
+            doctor.user=user
+            doctor=doctor.save()
             my_doctor_group = Group.objects.get_or_create(name='DOCTOR')
             my_doctor_group[0].user_set.add(user)
-
-            return HttpResponseRedirect('doctorlogin')
-    return render(request, 'hospital/doctorsignup.html', context=mydict)
-
-
-from django.http import JsonResponse
-def patient_signup_view(request):
-    userForm = forms.PatientUserForm()
-    patientForm = forms.PatientForm()
-    mydict = {'userForm': userForm, 'patientForm': patientForm}
-
-    if request.method == 'POST':
-        userForm = forms.PatientUserForm(request.POST)
-        patientForm = forms.PatientForm(request.POST, request.FILES)
-
-        if userForm.is_valid() and patientForm.is_valid():
-            username = userForm.cleaned_data['username']
-
-            # Check if the username already exists
-            if User.objects.filter(username=username).exists():
-                return JsonResponse({'error': 'Username already taken'})
-
-            user = userForm.save()
-            user.set_password(user.password)
-            user.save()
-
-            patient = patientForm.save(commit=False)
-            patient.user = user
-            patient.assignedDoctorId = request.POST.get('assignedDoctorId')
-            patient.save()
-
-            my_patient_group = Group.objects.get_or_create(name='PATIENT')
-            my_patient_group[0].user_set.add(user)
-
-            # Return both HTML content and success message
-            return HttpResponseRedirect('patientlogin')
-
-    return render(request, 'hospital/patientsignup.html', context=mydict)
-
+        return HttpResponseRedirect('doctorlogin')
+    return render(request,'hospital/doctorsignup.html',context=mydict)
 
 
 
