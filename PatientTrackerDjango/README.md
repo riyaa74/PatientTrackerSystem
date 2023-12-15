@@ -35,10 +35,6 @@ python manage.py runserver
 http://127.0.0.1:8000/
 ```
 
-```
-## Drawbacks/LoopHoles
-- There should be at least one doctor in hospital before admitting patient. So first add doctor.
-- On update page of doctor/patient you must have to update password.
 
 
 
